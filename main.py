@@ -1,3 +1,4 @@
+from platform import system
 from getpass import getpass
 from bcrypt import hashpw, gensalt, checkpw
 
@@ -32,4 +33,5 @@ while True:
             break
 
     i = i + 1
-    ...
+
+if 'win' in  system.lower(): input("Hit enter to close the teminal.")

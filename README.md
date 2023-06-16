@@ -4,9 +4,9 @@ Terminal CRUD application in python
 
 # Setting up
 Before using the app for the first time it may be a good idea to install all dependencies
-Navigat eto the root folder which I guess you are in already :-)
+Navigate to the root folder which I guess you are in already :-)
 
-enter teh following code
+enter the following code
 ```CMD
 pip install -r modules.txt
 ```

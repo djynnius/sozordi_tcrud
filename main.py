@@ -2,6 +2,7 @@ from platform import system
 from getpass import getpass
 from bcrypt import hashpw, gensalt, checkpw
 
+
 #variables for managing app
 i = 1
 logged_in = False
@@ -28,10 +29,15 @@ while True:
     
     if logged_in:
         action = input("What do you want to do?: ")
-        if(action.strip().lower() in ['x', 'exit']):    
+        
+        #Take some action
+        axn = action.strip().lower()
+        if(axn in ['x', 'exit']):    
             print("Goodbye.\n")
             break
+        elif axn in ['h', 'help']:
+            print("h or help: see this menu\nx or exit: exits app")
 
     i = i + 1
 
-if 'win' in  system.lower(): input("Hit enter to close the teminal.")
+#if 'win' in  system.lower(): input("Hit enter to close the teminal.")

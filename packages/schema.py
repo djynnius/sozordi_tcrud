@@ -70,13 +70,15 @@ class Subject(Base):
     created_at = Column(DateTime, default=datetime.now)
 
 if __name__ == '__main__':
+    import platform, os
     from pathlib import Path
 
-    root = Path().absolute()
-    root = str(root)
-    root = root.split("/")[:-1]
-    root = "/".join(root)
-    
-    engine = create_engine(f"sqlite:///{root}/school.db")
-
+    engine = create_engine(f"sqlite:///school.db")
     Base.metadata.create_all(bind=engine)
+    
+    if 'win' in platform.system().lower() and 'dar' not in platform.system().lower():
+        #for windows computers
+        os.system("move school.db ..")
+    else:
+        #unix computer eg Mac, Linux 
+        os.system("mv school.db ../")

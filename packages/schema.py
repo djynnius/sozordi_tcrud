@@ -49,7 +49,7 @@ class Student(Base):
     age = Column(Integer)
     reg_num = Column(String(10), unique=True)
     created_at = Column(DateTime, default=datetime.now)
-    subjects = relationship('Subject', secondary=students_subjects, back_populates='courses')
+    courses = relationship('Subject', secondary=students_subjects, back_populates='students')
 
 class Teacher(Base):
     __tablename__ = 'teachers'
@@ -59,7 +59,7 @@ class Teacher(Base):
     sex = Column(String(10))
     staff_num = Column(String(10), unique=True)
     created_at = Column(DateTime, default=datetime.now)
-    subjects = relationship('Subject', secondary=teachers_subjects, back_populates='courses')    
+    subjects = relationship('Subject', secondary=teachers_subjects, back_populates='teachers')    
 
 class Subject(Base):
     __tablename__ = 'subjects'
@@ -68,6 +68,8 @@ class Subject(Base):
     code = Column(String(30))
     credits = Column(Integer)
     created_at = Column(DateTime, default=datetime.now)
+    students = relationship('Student', secondary=students_subjects, back_populates='courses')
+    teachers = relationship('Teacher', secondary=teachers_subjects, back_populates='subjects')
 
 if __name__ == '__main__':
     import platform, os

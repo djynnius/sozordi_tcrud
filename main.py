@@ -3,6 +3,7 @@ from getpass import getpass
 from bcrypt import hashpw, gensalt, checkpw
 
 
+
 #variables for managing app
 i = 1
 logged_in = False
@@ -24,7 +25,7 @@ while True:
         if checkpw('education'.encode(), pswd):
             logged_in = True
         else:
-            print("Sorry your account could not be verified.\n Goodbye.")
+            print("Sorry your account could not be verified.\nGoodbye.")
             break
     
     if logged_in:

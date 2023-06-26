@@ -51,6 +51,9 @@ class Student(Base):
     created_at = Column(DateTime, default=datetime.now)
     courses = relationship('Subject', secondary=students_subjects, back_populates='students')
 
+    def __repr__(self):
+        return f"{self.firstname} {self.lastname}"
+
 class Teacher(Base):
     __tablename__ = 'teachers'
     id = Column(Integer, primary_key=True)
@@ -59,7 +62,10 @@ class Teacher(Base):
     sex = Column(String(10))
     staff_num = Column(String(10), unique=True)
     created_at = Column(DateTime, default=datetime.now)
-    subjects = relationship('Subject', secondary=teachers_subjects, back_populates='teachers')    
+    subjects = relationship('Subject', secondary=teachers_subjects, back_populates='teachers')   
+
+    def __repr__(self):
+        return f"{self.firstname} {self.lastname}" 
 
 class Subject(Base):
     __tablename__ = 'subjects'
@@ -70,6 +76,9 @@ class Subject(Base):
     created_at = Column(DateTime, default=datetime.now)
     students = relationship('Student', secondary=students_subjects, back_populates='courses')
     teachers = relationship('Teacher', secondary=teachers_subjects, back_populates='subjects')
+
+    def __repr__(self):
+        return self.code
 
 if __name__ == '__main__':
     import platform, os

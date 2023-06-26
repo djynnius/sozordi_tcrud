@@ -2,7 +2,14 @@ from platform import system
 from getpass import getpass
 from bcrypt import hashpw, gensalt, checkpw
 
+#imports for our model
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from packages import schema
+from prettytable import PrettyTable
 
+engine = create_engine("sqlite:///school.db")
+sess = sessionmaker(engine)()
 
 #variables for managing app
 i = 1
@@ -36,8 +43,41 @@ while True:
         if(axn in ['x', 'exit']):    
             print("Goodbye.\n")
             break
+        elif axn == 'cs': #create student
+            firstname = input("Firstname: ")
+            lastname = input("Surname: ")
+            age = int(input("Age: "))
+            sex = input("Sex: ")
+            reg_num = input("Reg Num: ")
+
+            newstudent = schema.Student(firstname=firstname, lastname=lastname, sex=sex, age=age, reg_num=reg_num)
+            sess.add(newstudent)
+            sess.commit()
+
+            print(f"{firstname} {lastname} with registeration number {reg_num} was successfully added")
+
+        elif axn in ['s', 'students']:
+            #view students
+            students = sess.query(schema.Student).all()
+            st = PrettyTable()
+            st.field_names = ['Reg Number', 'Firstname', 'Surname', 'Age', 'Sex']
+            for student in students:
+                st.add_row([student.reg_num, student.firstname, student.lastname, student.age, student.sex])
+            print(st)
+        elif axn in ['t', 'l', 'teachers', 'lecturers']:
+            #view teachers
+            ...
+        elif axn in['c', 'courses']:
+            #view courses
+            ...
         elif axn in ['h', 'help']:
-            print("h or help: see this menu\nx or exit: exits app")
+            print('''
+s or students to view students
+t, l, teachers or lecturers to view lecturers
+c or courses to view subjects            
+h or help: see this menu
+x or exit: exits app
+''')
 
     i = i + 1
 

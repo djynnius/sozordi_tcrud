@@ -56,6 +56,28 @@ while True:
 
             print(f"{firstname} {lastname} with registeration number {reg_num} was successfully added")
 
+        elif axn == 'us': #update student
+            reg_num = input("Enter students registeration number: ")
+            student = sess.query(schema.Student).filter_by(reg_num = reg_num).one()
+            
+            firstname = input(f"Firstname [{student.firstname}]: ")
+            lastname = input(f"Surname [{student.lastname}]: ")
+            age = int(input(f"Age [{student.age}]: "))
+            sex = input(f"Sex [{student.sex}]: ")
+            reg_num = input(f"Reg Num [{student.reg_num}]: ")
+
+            student.firstname = student.firstname if firstname == '' else firstname
+            student.lastname = student.lastname if lastname == '' else lastname
+            try:
+                student.age = student.age if age == '' else int(age)
+            except:
+                student.age = student.age
+            
+            student.sex = student.sex if sex == '' else sex
+            student.reg_num = student.reg_num if reg_num == '' else reg_num
+
+            sess.commit()
+
         elif axn in ['s', 'students']:
             #view students
             students = sess.query(schema.Student).all()
@@ -64,6 +86,7 @@ while True:
             for student in students:
                 st.add_row([student.reg_num, student.firstname, student.lastname, student.age, student.sex])
             print(st)
+
         elif axn in ['t', 'l', 'teachers', 'lecturers']:
             #view teachers
             ...
@@ -73,6 +96,8 @@ while True:
         elif axn in ['h', 'help']:
             print('''
 s or students to view students
+cs to create a new student
+us to update a student record
 t, l, teachers or lecturers to view lecturers
 c or courses to view subjects            
 h or help: see this menu
